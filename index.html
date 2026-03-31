@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TFJS Image Recognition & Validation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Reconhecimento de Imagens</h1>
+            <nav>
+                <button class="tab-btn active" data-target="inference-section">Inferência</button>
+                <button class="tab-btn" data-target="evaluation-section">Avaliação (Lote)</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- SEÇÃO 1: INFÊRENCIA -->
+            <section id="inference-section" class="tab-content active">
+                <div class="card">
+                    <h2>Teste com Imagem ou Webcam</h2>
+                    <div class="actions">
+                        <button id="btn-webcam" class="btn primary">Iniciar Webcam</button>
+                        <label for="img-upload" class="btn secondary">
+                            Fazer Upload
+                            <input type="file" id="img-upload" accept="image/*" style="display:none">
+                        </label>
+                    </div>
+
+                    <div class="media-container" id="media-container">
+                        <!-- Webcam ou Imagem renderizada aqui -->
+                        <div id="placeholder" class="placeholder-text">Nenhuma imagem selecionada</div>
+                        <video id="webcam" autoplay playsinline width="224" height="224" style="display:none;"></video>
+                        <img id="uploaded-img" width="224" height="224" style="display:none;" />
+                    </div>
+
+                    <div class="results" id="live-results">
+                        <h3>Resultados:</h3>
+                        <div id="predictions-list" class="predictions-list">
+                            <!-- Barras de confiança renderizadas aqui -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 2: AVALIAÇÃO -->
+            <section id="evaluation-section" class="tab-content" style="display: none;">
+                <div class="card">
+                    <h2>Avaliação Fina e Retreino</h2>
+                    <p class="description">Para avaliar rigorosamente seu modelo em um dataset separado, selecione a pasta ou múltiplos arquivos de imagens correspondentes às classes. O App irá classificar todas e computar a Matriz de Confusão.</p>
+                    
+                    <div class="eval-dashboard-setup">
+                        <div id="eval-classes-list" class="eval-classes-list">
+                            <p style="color: #8b949e; margin-bottom: 1rem;">Carregando configurações do modelo...</p>
+                        </div>
+                        <div style="margin-top: 1.5rem; text-align: center;">
+                            <button id="btn-start-eval" class="btn secondary" disabled style="width: 100%; max-width: 400px; padding: 1rem;">Iniciar Validação de Todas as Classes</button>
+                        </div>
+                    </div>
+
+                    <div id="eval-status" class="status-msg"></div>
+                    <div class="progress-container" id="eval-progress-container" style="display:none;">
+                        <div class="progress-bar" id="eval-progress-bar"></div>
+                    </div>
+                    
+                    <div class="metrics-dashboard" id="metrics-dashboard" style="display:none;">
+                        <div class="stats-row">
+                            <div class="stat-box"><h4>Acurácia</h4><span id="stat-accuracy">0%</span></div>
+                            <div class="stat-box"><h4>Precision</h4><span id="stat-precision">0%</span></div>
+                            <div class="stat-box"><h4>Recall</h4><span id="stat-recall">0%</span></div>
+                            <div class="stat-box"><h4>F1-Score</h4><span id="stat-f1">0%</span></div>
+                        </div>
+
+                        <div class="confusion-matrix-container">
+                            <h3>Matriz de Confusão</h3>
+                            <canvas id="confusion-matrix-canvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Bibliotecas Necessárias -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.21.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+    <script src="metrics.js"></script>
+    <script src="ml.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
