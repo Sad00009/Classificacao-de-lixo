@@ -1,1 +1,0 @@
-# Classifica-o-de-lixo
